@@ -1,5 +1,3 @@
-"""Train baseline models and tuned decision tree."""
-
 from __future__ import annotations
 
 from sklearn.linear_model import LogisticRegression
@@ -7,7 +5,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-from .config import DT_PARAM_GRID, RANDOM_STATE
+from .preprocessing import DT_PARAM_GRID, RANDOM_STATE
 
 
 def train_baseline_models(X_train, y_train, X_test):
@@ -47,5 +45,5 @@ def tune_decision_tree(X_train, y_train, X_test):
     return {
         "grid_search": grid_search,
         "best_dt": best_dt,
-        "best_dt_pred": best_dt_pred
+        "best_dt_pred": best_dt_pred,
     }
