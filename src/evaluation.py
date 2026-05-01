@@ -1,5 +1,3 @@
-"""Metrics and feature importance reporting."""
-
 from __future__ import annotations
 
 import pandas as pd

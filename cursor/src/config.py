@@ -1,7 +1,7 @@
 """Shared constants for paths, columns, and model defaults."""
 
 TARGET = "salary"
-DATA_PATH = "data/Test.csv"
+DATA_PATH = "../data/Test.csv"
 
 CAT_COLS = [
     "workclass",
