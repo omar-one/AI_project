@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
@@ -21,6 +22,10 @@ def train_baseline_models(X_train, y_train, X_test):
     dt.fit(X_train, y_train)
     dt_pred = dt.predict(X_test)
 
+    rf = RandomForestClassifier(random_state=RANDOM_STATE, n_jobs=-1)
+    rf.fit(X_train, y_train)
+    rf_pred = rf.predict(X_test)
+
     return {
         "lr": lr,
         "lr_pred": lr_pred,
@@ -28,6 +33,8 @@ def train_baseline_models(X_train, y_train, X_test):
         "svm_pred": svm_pred,
         "dt": dt,
         "dt_pred": dt_pred,
+        "rf": rf,
+        "rf_pred": rf_pred,
     }
 
 
