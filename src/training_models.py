@@ -13,10 +13,29 @@ def train_baseline_models(X_train, y_train, X_test):
     lr = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
     lr.fit(X_train, y_train)
     lr_pred = lr.predict(X_test)
+    #
+    # svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
+    # svm.fit(X_train, y_train)
+    # svm_pred = svm.predict(X_test)
 
-    svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
-    svm.fit(X_train, y_train)
-    svm_pred = svm.predict(X_test)
+    svc_param_grid = {
+        'C' : [0.1 , 1 , 10 , 100],
+        'gamma' : [0.1 , 1 , 10 , 100],
+        'kernel' : ['rbf'],
+    }
+
+    svc_grid_search = GridSearchCV(
+        SVC(random_state=RANDOM_STATE),
+        svc_param_grid,
+        cv=5,
+        scoring="accuracy",
+        n_jobs=-1,
+
+    )
+    svc_grid_search.fit(X_train, y_train)
+    svm = svc_grid_search.best_estimator_
+    svm_pred = svc_grid_search.predict(X_test)
+
 
     dt = DecisionTreeClassifier(random_state=RANDOM_STATE)
     dt.fit(X_train, y_train)
@@ -35,6 +54,7 @@ def train_baseline_models(X_train, y_train, X_test):
         "dt_pred": dt_pred,
         "rf": rf,
         "rf_pred": rf_pred,
+        "svc_best_params" : svc_grid_search.best_params
     }
 
 
