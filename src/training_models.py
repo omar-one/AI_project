@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
 from .preprocessing import DT_PARAM_GRID, RANDOM_STATE
 
@@ -13,7 +14,8 @@ def train_baseline_models(X_train, y_train, X_test):
     lr = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
     lr.fit(X_train, y_train)
     lr_pred = lr.predict(X_test)
-    #
+    #_________________________________________________________________________
+    
     # svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
     # svm.fit(X_train, y_train)
     # svm_pred = svm.predict(X_test)
@@ -35,6 +37,18 @@ def train_baseline_models(X_train, y_train, X_test):
     svc_grid_search.fit(X_train, y_train)
     svm = svc_grid_search.best_estimator_
     svm_pred = svc_grid_search.predict(X_test)
+
+    # accuracy
+
+    results = train_baseline_models(X_train, y_train, X_test)
+
+    svc_acc = accuracy_score(y_test, results['svm_pred'])
+
+    print(f"SVC Accuracy after Tuning: {svc_acc * 100:.2f}%")
+
+    print(f"Best Parameters found: {results['svc_best_params']}")
+
+    # _____________________________________________________________________________
 
 
     dt = DecisionTreeClassifier(random_state=RANDOM_STATE)
