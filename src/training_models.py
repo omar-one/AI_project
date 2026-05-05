@@ -5,53 +5,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from skopt import BayesSearchCV
-from skopt.space import Real, Categorical, Integer
 
 from .preprocessing import DT_PARAM_GRID, RANDOM_STATE
 
 
 def train_baseline_models(X_train, y_train, X_test):
-
-    # #lr = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
-    # #lr.fit(X_train, y_train)
-    # #lr_pred = lr.predict(X_test)
-    # lr_param_grid = {
-    #     'C': [0.01, 0.1, 1, 10],
-    #     'max_iter': [100, 500, 1000],
-    #     'solver': ['lbfgs', 'liblinear', 'saga']
-    # }
-    #
-    # lr_grid_search = GridSearchCV(
-    #     LogisticRegression(random_state=RANDOM_STATE),
-    #     lr_param_grid,
-    #     cv=5,
-    #     scoring="accuracy",
-    #     n_jobs=-1,
-    # )
-    # lr_grid_search.fit(X_train, y_train)
-    # lr = lr_grid_search.best_estimator_
-    # lr_pred = lr_grid_search.predict(X_test)
-
-    lr_param_space = {
-        'C': Real(0.01, 10, prior='log-uniform'),
-        'max_iter': Integer(500, 2000),
-        'solver': Categorical(['lbfgs', 'liblinear', 'saga'])
-    }
-
-    lr_bayes_search = BayesSearchCV(
-        LogisticRegression(random_state=RANDOM_STATE),
-        lr_param_space,
-        n_iter=30,  # try 30 smart combinations
-        cv=5,
-        scoring="accuracy",
-        n_jobs=-1,
-        random_state=RANDOM_STATE
-    )
-    lr_bayes_search.fit(X_train, y_train)
-    lr = lr_bayes_search.best_estimator_
-    lr_pred = lr_bayes_search.predict(X_test)
-
+    lr = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
+    lr.fit(X_train, y_train)
+    lr_pred = lr.predict(X_test)
     #
     # svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
     # svm.fit(X_train, y_train)
@@ -87,14 +48,13 @@ def train_baseline_models(X_train, y_train, X_test):
     return {
         "lr": lr,
         "lr_pred": lr_pred,
-        "lr_best_params": lr_bayes_search.best_params_,
         "svm": svm,
         "svm_pred": svm_pred,
-        "svc_best_params": svc_grid_search.best_params_,
         "dt": dt,
         "dt_pred": dt_pred,
         "rf": rf,
         "rf_pred": rf_pred,
+        "svc_best_params" : svc_grid_search.best_params
     }
 
 
