@@ -13,28 +13,10 @@ from .preprocessing import DT_PARAM_GRID, RANDOM_STATE
 
 def train_baseline_models(X_train, y_train, X_test):
 
-    #lr = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
-    #lr.fit(X_train, y_train)
-    #lr_pred = lr.predict(X_test)
+    lr = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
+    lr.fit(X_train, y_train)
+    lr_pred = lr.predict(X_test)
 
-    lr_param_space = {
-        'C': Real(0.01, 10, prior='log-uniform'),
-        'max_iter': Integer(500, 2000),
-        'solver': Categorical(['lbfgs', 'liblinear', 'saga'])
-    }
-
-    lr_bayes_search = BayesSearchCV(
-        LogisticRegression(random_state=RANDOM_STATE),
-        lr_param_space,
-        n_iter=30,  # try 30 smart combinations
-        cv=5,
-        scoring="accuracy",
-        n_jobs=-1,
-        random_state=RANDOM_STATE
-    )
-    lr_bayes_search.fit(X_train, y_train)
-    lr = lr_bayes_search.best_estimator_
-    lr_pred = lr_bayes_search.predict(X_test)
 
     #
     # svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
@@ -71,7 +53,6 @@ def train_baseline_models(X_train, y_train, X_test):
     return {
          "lr": lr,
         "lr_pred": lr_pred,
-        "lr_best_params": lr_bayes_search.best_params_,
         "svm": svm,
         "svm_pred": svm_pred,
         "dt": dt,
@@ -98,3 +79,34 @@ def tune_decision_tree(X_train, y_train, X_test):
         "best_dt": best_dt,
         "best_dt_pred": best_dt_pred,
     }
+
+def tune_Logistic_Regression(X_train, y_train, X_test):
+
+    lr_param_space = {
+        'C': Real(0.01, 10, prior='log-uniform'),
+        'max_iter': Integer(500, 2000),
+        'solver': Categorical(['lbfgs', 'liblinear', 'saga'])
+    }
+
+    lr_bayes_search = BayesSearchCV(
+        LogisticRegression(random_state=RANDOM_STATE),
+        lr_param_space,
+        n_iter=30,
+        cv=5,
+        scoring="accuracy",
+        n_jobs=-1,
+        random_state=RANDOM_STATE
+    )
+
+    lr_bayes_search.fit(X_train, y_train)
+
+    lr = lr_bayes_search.best_estimator_
+    lr_pred = lr_bayes_search.predict(X_test)
+
+    return {
+        "lr": lr,
+        "lr_pred": lr_pred,
+        "lr_bayes_search": lr_bayes_search,
+        "lr_best_params": lr_bayes_search.best_params_
+    }
+
