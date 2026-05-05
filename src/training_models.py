@@ -16,9 +16,9 @@ def train_baseline_models(X_train, y_train, X_test):
     lr_pred = lr.predict(X_test)
 
     
-     svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
-     svm.fit(X_train, y_train)
-     svm_pred = svm.predict(X_test)
+    svm = SVC(kernel="rbf", random_state=RANDOM_STATE)
+    svm.fit(X_train, y_train)
+    svm_pred = svm.predict(X_test)
 
 
 
@@ -76,7 +76,7 @@ def tune_svm(X_train, y_train, X_test, y_test):
         n_jobs=-1,
     )
 
-   
+
     svc_grid_search.fit(X_train, y_train)
 
 
