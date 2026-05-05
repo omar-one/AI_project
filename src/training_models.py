@@ -39,7 +39,7 @@ def train_baseline_models(X_train, y_train, X_test):
         "dt_pred": dt_pred,
         "rf": rf,
         "rf_pred": rf_pred,
-        "svc_best_params" : svc_grid_search.best_params
+
     }
 
 
@@ -76,7 +76,7 @@ def tune_svm(X_train, y_train, X_test, y_test):
         n_jobs=-1,
     )
 
-    # تدريب البحث الشبكي
+   
     svc_grid_search.fit(X_train, y_train)
 
 
@@ -94,5 +94,5 @@ def tune_svm(X_train, y_train, X_test, y_test):
     return {
         "svc_best_params": svc_grid_search.best_params_,
         "svm_pred": svm_pred,
-        "svm_best_score": svc_grid_search.best_score_ 
+        "svm_best_score": svc_grid_search.best_score_
     }
