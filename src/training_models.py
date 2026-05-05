@@ -22,8 +22,6 @@ def train_baseline_models(X_train, y_train, X_test):
 
 
 
-
-
     dt = DecisionTreeClassifier(random_state=RANDOM_STATE)
     dt.fit(X_train, y_train)
     dt_pred = dt.predict(X_test)
@@ -41,7 +39,7 @@ def train_baseline_models(X_train, y_train, X_test):
         "dt_pred": dt_pred,
         "rf": rf,
         "rf_pred": rf_pred,
-
+        "svc_best_params" : svc_grid_search.best_params
     }
 
 
@@ -63,7 +61,7 @@ def tune_decision_tree(X_train, y_train, X_test):
     }
 
 
-def tune_svc(X_train, y_train, X_test, y_test):
+def tune_svm(X_train, y_train, X_test, y_test):
     svc_param_grid = {
         'C': [0.1, 1, 10, 100],
         'gamma': [0.1, 1, 10, 100],
@@ -78,11 +76,13 @@ def tune_svc(X_train, y_train, X_test, y_test):
         n_jobs=-1,
     )
 
+    # تدريب البحث الشبكي
     svc_grid_search.fit(X_train, y_train)
 
 
-    svm_best = svc_grid_search.best_estimator_
-    svm_pred = svm_best.predict(X_test)
+    best_svm = svc_grid_search.best_estimator_
+
+    svm_pred = best_svm.predict(X_test)
 
 
     svc_acc = accuracy_score(y_test, svm_pred)
@@ -94,5 +94,5 @@ def tune_svc(X_train, y_train, X_test, y_test):
     return {
         "svc_best_params": svc_grid_search.best_params_,
         "svm_pred": svm_pred,
-        "svm_best_score": svc_grid_search.best_score_
+        "svm_best_score": svc_grid_search.best_score_ 
     }
