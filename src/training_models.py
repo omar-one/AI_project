@@ -78,7 +78,7 @@ def train_baseline_models(X_train, y_train, X_test):
         "dt_pred": dt_pred,
         "rf": rf,
         "rf_pred": rf_pred,
-        "svc_best_params" : svc_grid_search.best_params
+        "svc_best_params" : svc_grid_search.best_params_
     }
 
 
