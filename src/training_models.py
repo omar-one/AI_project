@@ -8,7 +8,7 @@ from skopt.space import Categorical, Integer, Real
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-from .preprocessing import RANDOM_STATE
+from consts import RANDOM_STATE
 
 def tune_decision_tree(X_train, y_train):
     dt_param_space = {
@@ -36,7 +36,6 @@ def tune_decision_tree(X_train, y_train):
         "estimator": best_dt,
         "search": dt_bayes_search,
         "best_params": dt_bayes_search.best_params_,
-        "best_score": dt_bayes_search.best_score_,
     }
 
 def tune_svm(X_train, y_train):
@@ -61,7 +60,6 @@ def tune_svm(X_train, y_train):
         "estimator": best_svm,
         "search": svc_grid_search,
         "best_params": svc_grid_search.best_params_,
-        "best_score": svc_grid_search.best_score_,
     }
 
 def tune_LogisticRegression(X_train, y_train):
@@ -88,7 +86,6 @@ def tune_LogisticRegression(X_train, y_train):
         "estimator": lr,
         "search": lr_bayes_search,
         "best_params": lr_bayes_search.best_params_,
-        "best_score": lr_bayes_search.best_score_,
     }
 
 def tune_RandomForest(X_train, y_train):
@@ -116,5 +113,4 @@ def tune_RandomForest(X_train, y_train):
         "estimator": rf,
         "search": rf_bayes_search,
         "best_params": rf_bayes_search.best_params_,
-        "best_score": rf_bayes_search.best_score_,
     }
