@@ -41,8 +41,8 @@ def tune_decision_tree(X_train, y_train):
 def tune_svm(X_train, y_train):
     svc_param_grid = {
         'C': [0.1, 1, 10, 100],
-        'gamma': [0.1, 1, 10, 100],
-        'kernel': ['rbf', 'linear', 'poly'],
+        'kernel': ['poly'],
+        'degree': [2, 3, 4],
     }
 
     svc_grid_search = GridSearchCV(
