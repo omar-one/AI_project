@@ -64,18 +64,18 @@ def tune_svm(X_train, y_train):
 
 def tune_LogisticRegression(X_train, y_train):
     lr_param_space = {
-        'C': Real(0.01, 10, prior='log-uniform'),
-        'max_iter': Categorical([500, 1000, 1500, 2000]),
-        'solver': Categorical(['lbfgs', 'liblinear', 'saga'])
+        'C': Real(0.01, 10, prior='log-uniform'), #makes huge difference with small values, small diff. with hugh ones.
+        'max_iter': Categorical([500, 1000, 1500, 2000]), #gradient descent.
+        'solver': Categorical(['lbfgs', 'liblinear', 'saga']) #varient training approaches.
     }
 
     lr_bayes_search = BayesSearchCV(
         LogisticRegression(random_state=RANDOM_STATE),
         lr_param_space,
-        n_iter=30,  # try 30 smart combinations
-        cv=5,
-        scoring="accuracy",
-        n_jobs=-1,
+        n_iter=30,  #try 30 smart combinations.
+        cv=5, #split each combination into 5 parts.
+        scoring="accuracy", #compare based on acc.
+        n_jobs=-1, #use all cpu power.
         random_state=RANDOM_STATE
     )
     
