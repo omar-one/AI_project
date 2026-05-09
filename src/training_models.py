@@ -66,7 +66,7 @@ def tune_LogisticRegression(X_train, y_train):
     lr_param_space = {
         'C': Real(0.01, 10, prior='log-uniform'), #makes huge difference with small values, small diff. with hugh ones.
         'max_iter': Categorical([500, 1000, 1500, 2000]), #gradient descent.
-        'solver': Categorical(['lbfgs', 'liblinear', 'saga']) #varient training approaches.
+        'solver': Categorical(['lbfgs', 'liblinear', 'saga']) #varient mathematical approaches.
     }
 
     lr_bayes_search = BayesSearchCV(
