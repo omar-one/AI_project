@@ -6,7 +6,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from .config import RANDOM_STATE, TARGET, TEST_SIZE
-from preprocessing import preprocessing_phase_1, split_train_test
 
 
 def load_dataset(data_path: str) -> pd.DataFrame:
