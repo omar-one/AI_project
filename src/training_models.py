@@ -91,9 +91,9 @@ def tune_LogisticRegression(X_train, y_train):
 def tune_RandomForest(X_train, y_train):
     rf_param_space = {
         "n_estimators": Integer(100, 500),
-        "max_depth": Integer(5, 50),
-        "min_samples_split": Integer(2, 20),
         "max_features": Categorical(["sqrt", "log2", 0.3, 0.5, 0.7]),
+        "min_samples_split": Integer(2, 20), # 10
+        "max_depth": Integer(5, 50),
     }
 
     rf_bayes_search = BayesSearchCV(

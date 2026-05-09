@@ -1,7 +1,11 @@
 """Shared constants for paths, columns, and model defaults."""
 
+from pathlib import Path
+
+# Repo layout: AI_project/data/Test.csv and AI_project/cursor/src/config.py
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 TARGET = "salary"
-DATA_PATH = "../data/Test.csv"
+DATA_PATH = str(_PROJECT_ROOT / "data" / "Test.csv")
 
 CAT_COLS = [
     "workclass",
