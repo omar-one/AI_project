@@ -72,8 +72,8 @@ def tune_LogisticRegression(X_train, y_train):
     lr_bayes_search = BayesSearchCV(
         LogisticRegression(random_state=RANDOM_STATE),
         lr_param_space,
-        n_iter=30,  #try 30 smart combinations.
-        cv=5, #split each combination into 5 parts.
+        n_iter=30,  #try 30 smart combinations.(learns form each one) :)
+        cv=5, #split each combination into 5 parts to ensure better performance.
         scoring="accuracy", #compare based on acc.
         n_jobs=-1, #use all cpu power.
         random_state=RANDOM_STATE
