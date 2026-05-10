@@ -57,9 +57,11 @@ fi_df = pd.DataFrame({
         "Importance": importance
     }).sort_values(by="Importance", ascending=False)
 
-print("\nTop 10 Most Important Features:")
+print("\nTop 5 Most Important Features:")
 print(fi_df.head(5))
 
 print("\nProject completed successfully.")
 
 print(f"Best Random Forest Accuracy: {rf_acc:.4f}")
+print("Best hyperparameters for Random Forest: ")
+print(rf_results["best_params"])
